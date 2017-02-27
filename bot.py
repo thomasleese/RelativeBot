@@ -1,3 +1,4 @@
+import csv
 import random
 
 import requests
@@ -10,28 +11,33 @@ class Volume:
     def __init__(self, name, plural, ml):
         self.name = name
         self.plural = plural
-        self.ml = float(ml)
+        self.ml = ml
 
 class Duration:
     def __init__(self, name, plural, s):
         self.name = name
         self.plural = plural
-        self.s = float(s)
+        self.s = s
 
 class Area:
     def __init__(self, name, plural, m3):
         self.name = name
         self.plural = plural
-        self.m3 = float(m3)
+        self.m3 = m3
 
-with open("volumes.csv") as f:
-    volumes = [Volume(*[c.strip() for c in l[:-1].split(",")]) for l in f]
 
-with open("durations.csv") as f:
-    durations = [Duration(*[c.strip() for c in l[:-1].split(",")]) for l in f]
+def read_collection(filename, klass):
+    with open(filename) as file:
+        reader = csv.reader(file)
+        return [
+            klass(row[0].strip(), row[1].strip(), float(row[2]))
+            for row in reader
+        ]
 
-with open("areas.csv") as f:
-    areas = [Area(*[c.strip() for c in l[:-1].split(",")]) for l in f]
+
+volumes = read_collection('volumes.csv', Volume)
+durations = read_collection('durations.csv', Duration)
+areas = read_collection('areas.csv', Area)
 
 choice = random.choice(["volume", "duration", "area"])
 
