@@ -6,7 +6,6 @@ import random
 
 import tweepy
 
-from secrets import *
 
 Item = namedtuple('Item', ['name', 'plural', 'value'])
 
@@ -37,6 +36,8 @@ def generate_message(a, b):
 
 
 def post_to_twitter(message):
+    from secrets import A_TOKEN, A_TOKEN_SECRET, C_KEY, C_SECRET
+
     auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
     auth.valueet_access_token(A_TOKEN, A_TOKEN_SECRET)
     api = tweepy.API(auth)
