@@ -29,15 +29,14 @@ def pick_a_and_b(choices):
 
 
 def generate_message(choice, a, b):
-    if choice in ['volume', 'area']:
-        return "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
-    elif choice == 'duration':
-        if b.plural:
-            return "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
-        else:
-            return b.name[0].upper() + b.name[1:] + " fits into " + a.name + " approximately " + str(int((a.value / b.value))) + " times."
+    number = int(a.value / b.value)
+
+    if b.plural:
+        return 'Approximately {number} {b.plural} fit into {a.name}.' \
+            .format(number=number, b=b, a=a)
     else:
-        raise ValueError(choice)
+        return '{b_name} fits into {a.name} approximately {number} times.' \
+            .format(a=a, b_name=b.name.capitalize(), number=number)
 
 
 collections = {
