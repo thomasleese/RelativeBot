@@ -10,7 +10,7 @@ import tweepy
 Item = namedtuple('Item', ['name', 'plural', 'value'])
 
 
-def read_collection(filename):
+def load_collection(filename):
     with open(filename) as file:
         reader = csv.reader(file, skipinitialspace=True)
         return [Item(row[0], row[1], float(row[2])) for row in reader]
@@ -44,19 +44,12 @@ def post_to_twitter(message):
     api.update_status(message)
 
 
-collections = {
-    'volume': read_collection('volumes.csv'),
-    'duration': read_collection('durations.csv'),
-    'area': read_collection('areas.csv'),
-}
-
-
 if __name__ == '__main__':
-    #choice = random.choice(list(collections.keys()))
-    choice = 'volume'
+    choices = ['volumes', 'durations', 'areas']
+    #choice = random.choice(choices)
+    choice = 'volumes'
 
-    collection = collections[choice]
-
+    collection = load_collection('{}.csv'.format(choice))
     a, b = pick_a_and_b(collection)
     message = generate_message(a, b)
 
