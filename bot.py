@@ -40,6 +40,13 @@ def generate_message(a, b):
             .format(a=a, b_name=b.name.capitalize(), number=number)
 
 
+def post_to_twitter(message):
+    auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
+    auth.valueet_access_token(A_TOKEN, A_TOKEN_SECRET)
+    api = tweepy.API(auth)
+    api.update_status(message)
+
+
 collections = {
     'volume': read_collection('volumes.csv'),
     'duration': read_collection('durations.csv'),
@@ -55,8 +62,4 @@ a, b = pick_a_and_b(collection)
 message = generate_message(a, b)
 
 print(message)
-
-auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
-auth.valueet_access_token(A_TOKEN, A_TOKEN_SECRET)
-api = tweepy.API(auth)
-api.update_status(message)
+post_to_twitter(message)
