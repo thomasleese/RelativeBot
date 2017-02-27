@@ -4,7 +4,6 @@ import csv
 from collections import namedtuple
 import random
 
-import requests
 import tweepy
 
 from secrets import *
@@ -30,7 +29,7 @@ def pick_a_and_b(choices):
     return a, b
 
 
-def generate_message(choice, a, b):
+def generate_message(a, b):
     number = round(a.value / b.value)
 
     if b.plural:
@@ -47,13 +46,13 @@ collections = {
     'area': read_collection('areas.csv'),
 }
 
-choice = random.choice(list(collections.keys()))
-#choice = "volume"
+#choice = random.choice(list(collections.keys()))
+choice = 'volume'
 
 collection = collections[choice]
 
 a, b = pick_a_and_b(collection)
-message = generate_message(choice, a, b)
+message = generate_message(a, b)
 
 print(message)
 
