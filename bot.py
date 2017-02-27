@@ -28,6 +28,18 @@ def pick_a_and_b(choices):
     return a, b
 
 
+def generate_message(choice, a, b):
+    if choice in ['volume', 'area']:
+        return "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
+    elif choice == 'duration':
+        if b.plural:
+            return "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
+        else:
+            return b.name[0].upper() + b.name[1:] + " fits into " + a.name + " approximately " + str(int((a.value / b.value))) + " times."
+    else:
+        raise ValueError(choice)
+
+
 collections = {
     'volume': read_collection('volumes.csv'),
     'duration': read_collection('durations.csv'),
@@ -39,24 +51,8 @@ choice = random.choice(collections.keys())
 
 collection = collections[choice]
 
-if choice == "volume":
-    a, b = pick_a_and_b(collection)
-
-    message = "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
-
-if choice == "duration":
-    a, b = pick_a_and_b(collection)
-
-    if len(b.plural) == 0:
-        message = b.name[0].upper() + b.name[1:] + " fits into " + a.name + " approximately " + str(int((a.value / b.value))) + " times."
-    else:
-        message = "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
-
-if choice == "area":
-    a, b = pick_a_and_b(collection)
-
-    message = "Approximately " + str(int((a.value / b.value))) + " " + b.plural + " fit into " + a.name + "."
-
+a, b = pick_a_and_b(collection)
+message = generate_message(choice, a, b)
 
 print message
 
