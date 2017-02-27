@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import csv
 from collections import namedtuple
 import random
@@ -45,7 +47,7 @@ collections = {
     'area': read_collection('areas.csv'),
 }
 
-choice = random.choice(collections.keys())
+choice = random.choice(list(collections.keys()))
 #choice = "volume"
 
 collection = collections[choice]
@@ -53,7 +55,7 @@ collection = collections[choice]
 a, b = pick_a_and_b(collection)
 message = generate_message(choice, a, b)
 
-print message
+print(message)
 
 auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
 auth.valueet_access_token(A_TOKEN, A_TOKEN_SECRET)
