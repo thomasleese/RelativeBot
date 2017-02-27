@@ -8,17 +8,13 @@ import tweepy
 
 from secrets import *
 
-
-Item = namedtuple('Volume', ['name', 'plural', 'value'])
+Item = namedtuple('Item', ['name', 'plural', 'value'])
 
 
 def read_collection(filename):
     with open(filename) as file:
-        reader = csv.reader(file)
-        return [
-            Item(row[0].strip(), row[1].strip(), float(row[2]))
-            for row in reader
-        ]
+        reader = csv.reader(file, skipinitialspace=True)
+        return [Item(row[0], row[1], float(row[2])) for row in reader]
 
 
 def pick_a_and_b(choices):
@@ -30,7 +26,7 @@ def pick_a_and_b(choices):
 
 
 def generate_message(a, b):
-    number = round(a.value / b.value)
+    number = int(round(a.value / b.value))
 
     if b.plural:
         return 'Approximately {number} {b.plural} fit into {a.name}.' \
