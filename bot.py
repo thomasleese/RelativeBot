@@ -1,4 +1,5 @@
 import csv
+from collections import namedtuple
 import random
 
 import requests
@@ -7,23 +8,9 @@ import tweepy
 from secrets import *
 
 
-class Volume:
-    def __init__(self, name, plural, ml):
-        self.name = name
-        self.plural = plural
-        self.ml = ml
-
-class Duration:
-    def __init__(self, name, plural, s):
-        self.name = name
-        self.plural = plural
-        self.s = s
-
-class Area:
-    def __init__(self, name, plural, m3):
-        self.name = name
-        self.plural = plural
-        self.m3 = m3
+Volume = namedtuple('Volume', ['name', 'plural', 'ml'])
+Duration = namedtuple('Duration', ['name', 'plural', 's'])
+Area = namedtuple('Area', ['name', 'plural', 'm3'])
 
 
 def read_collection(filename, klass):
