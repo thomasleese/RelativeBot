@@ -30,21 +30,24 @@ def pick_a_and_b(choices, picker):
     return a, b
 
 
-volumes = read_collection('volumes.csv', Volume)
-durations = read_collection('durations.csv', Duration)
-areas = read_collection('areas.csv', Area)
+collections = {
+    'volume': read_collection('volumes.csv', Volume),
+    'duration': read_collection('durations.csv', Duration),
+    'area': read_collection('areas.csv', Area),
+}
 
-choice = random.choice(["volume", "duration", "area"])
-
+choice = random.choice(collections.keys())
 choice = "volume"
 
+collection = collections[choice]
+
 if choice == "volume":
-    a, b = pick_a_and_b(volumes, lambda volume: volume.ml)
+    a, b = pick_a_and_b(collection, lambda volume: volume.ml)
 
     message = "Approximately " + str(int((a.ml / b.ml))) + " " + b.plural + " fit into " + a.name + "."
 
 if choice == "duration":
-    a, b = pick_a_and_b(durations, lambda duration: duration.s)
+    a, b = pick_a_and_b(collection, lambda duration: duration.s)
 
     if len(b.plural) == 0:
         message = b.name[0].upper() + b.name[1:] + " fits into " + a.name + " approximately " + str(int((a.s / b.s))) + " times."
@@ -52,7 +55,7 @@ if choice == "duration":
         message = "Approximately " + str(int((a.s / b.s))) + " " + b.plural + " fit into " + a.name + "."
 
 if choice == "area":
-    a, b = pick_a_and_b(areas, lambda duration: duration.m3)
+    a, b = pick_a_and_b(collection, lambda duration: duration.m3)
 
     message = "Approximately " + str(int((a.m3 / b.m3))) + " " + b.plural + " fit into " + a.name + "."
 
