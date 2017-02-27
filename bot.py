@@ -53,13 +53,15 @@ collections = {
     'area': read_collection('areas.csv'),
 }
 
-#choice = random.choice(list(collections.keys()))
-choice = 'volume'
 
-collection = collections[choice]
+if __name__ == '__main__':
+    #choice = random.choice(list(collections.keys()))
+    choice = 'volume'
 
-a, b = pick_a_and_b(collection)
-message = generate_message(a, b)
+    collection = collections[choice]
 
-print(message)
-post_to_twitter(message)
+    a, b = pick_a_and_b(collection)
+    message = generate_message(a, b)
+
+    print(message)
+    post_to_twitter(message)
