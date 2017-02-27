@@ -29,7 +29,7 @@ def pick_a_and_b(choices):
 
 
 def generate_message(choice, a, b):
-    number = int(a.value / b.value)
+    number = round(a.value / b.value)
 
     if b.plural:
         return 'Approximately {number} {b.plural} fit into {a.name}.' \
