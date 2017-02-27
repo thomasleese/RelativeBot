@@ -1,5 +1,10 @@
-import tweepy, requests, random
+import random
+
+import requests
+import tweepy
+
 from secrets import *
+
 
 class Volume:
     def __init__(self, name, plural, ml):
@@ -21,10 +26,10 @@ class Area:
 
 with open("volumes.csv") as f:
     volumes = [Volume(*[c.strip() for c in l[:-1].split(",")]) for l in f]
-    
+
 with open("durations.csv") as f:
     durations = [Duration(*[c.strip() for c in l[:-1].split(",")]) for l in f]
-    
+
 with open("areas.csv") as f:
     areas = [Area(*[c.strip() for c in l[:-1].split(",")]) for l in f]
 
@@ -62,9 +67,9 @@ if choice == "area":
 
     message = "Approximately " + str(int((a.m3 / b.m3))) + " " + b.plural + " fit into " + a.name + "."
 
+print message
+
 auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
 auth.set_access_token(A_TOKEN, A_TOKEN_SECRET)
 api = tweepy.API(auth)
 api.update_status(message)
-
-print message
